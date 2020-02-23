@@ -3,7 +3,8 @@
  * @author Chris Zachariah (cvz2)
  * @author Anthony Topol (at877)
  */
-public abstract class Student implements Comparable {
+public abstract class Student implements Comparable 
+{
 	private String fname;	// first name of the Student
 	private String lname;	// last name of the Student
 	protected int credit;	// the number of credits that are taken by the Student
@@ -19,17 +20,28 @@ public abstract class Student implements Comparable {
 		this.fname = fname;
 		this.lname = lname;
 		this.credit = credit;
-	} // Student()
-	
+	} // Student()	
 	
 	/**
-	 * This method will compare two Students.
+	 * This method will compare two Students. Comparisons start with last name and then first name.
 	 * @param obj is the Student that needs to be compared to the current Student
-	 * @return 0 if the first and last name are the same, 1 if this > obj and -1 if this < obj
+	 * @return 0 if the first and last name are the same, 1 if this > obj and -1 if this < obj 
 	 */
 	public int compareTo(Object obj) 
 	{
-		return 0;
+		Student ptr = (Student) obj;
+		if ((this.lname.equals(ptr.lname)) && (this.fname.equals(ptr.fname)))
+		{
+			return 0;
+		}
+		else if ( ((this.lname.compareTo(ptr.lname)) > 0) || ((this.fname.compareTo(ptr.fname)) > 0) )
+		{
+			return 1;
+		}
+		else
+		{
+			return -1;
+		}
 	} // compareTo()
 	
 	/**
@@ -38,7 +50,7 @@ public abstract class Student implements Comparable {
 	 */
 	public String toString() 
 	{
-		return this.fname + " " + this.lname + " " + this.credit;
+		return "Name: " + this.fname + " " + this.lname + " , Credits: " + this.credit;
 	} // toString()
 
 	//compute the tuition due; concrete implementation is required in the subclasses.
