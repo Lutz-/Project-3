@@ -1,7 +1,6 @@
 /**
  * This class is the abstract parent class for the different types of Students.
  * @author Chris Zachariah (cvz2)
- * @author Anthony Topol (at877)
  */
 public abstract class Student implements Comparable 
 {

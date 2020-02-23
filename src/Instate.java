@@ -1,7 +1,6 @@
 /**
  * This is the In-State Student class that extends Student.
  * @author Chris Zachariah (cvz2)
- * @author Anthony Topol (at877)
  */
 public class Instate extends Student 
 {
