@@ -88,7 +88,7 @@ public class Instate extends Student
 	     System.out.println(four.tuitionDue());
 	     System.out.println(four.toString());
 	     
-	     Instate pete = new Instate("Peter","Paker",17,0);
+	     Instate pete = new Instate("Peter","Paker",12,1000);
 	     System.out.println(pete.toString() + " , Tuition Due: $" + pete.tuitionDue());
 	 } // main()
 } // Instate

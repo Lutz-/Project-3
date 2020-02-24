@@ -1,5 +1,5 @@
 /**
- * This is the In-State Student class that extends Student.
+ * This is the Out-Of-State Student class that extends Student.
  * @author Chris Zachariah (cvz2)
  */
 public class Outstate extends Student 
@@ -93,12 +93,12 @@ public class Outstate extends Student
 		if (ptr.tristate)
 		{
 			String getNameAndCreds = super.toString();
-			return getNameAndCreds + " , Student Type: Out-of-State , Tri-State: YES";
+			return getNameAndCreds + " , Student Type: Out-Of-State , Tri-State: YES";
 		}
 		else
 		{
 			String getNameAndCreds = super.toString();
-			return getNameAndCreds + " , Student Type: Out-of-State , Tri-State: NO";
+			return getNameAndCreds + " , Student Type: Out-Of-State , Tri-State: NO";
 		}		
 	} // toString()
 	
@@ -108,7 +108,7 @@ public class Outstate extends Student
 	 */
 	public static void main(String [] args)
 	 {
-		Outstate one = new Outstate("Chris","Zachariah",9,true);
+		Outstate one = new Outstate("Chris","Zachariah",17,true);
 		System.out.println(one.toString());
 		System.out.println(one.tuitionDue());
 		
