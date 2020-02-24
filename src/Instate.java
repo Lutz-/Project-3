@@ -6,6 +6,16 @@ public class Instate extends Student
 {
 	private int funds;
 	
+	public final int INSTATE_TUITION_PER_CRED = 433;
+	
+	/**
+	 * This is the parameterized constructor for this class. This constructor is only invoked
+	 * after checking that all the given information is valid.
+	 * @param fname is the first name of the Student
+	 * @param lname is the last name of the Student
+	 * @param credit is the number of credits that the Student is taking
+	 * @param funds	is the amount of funding that the student receives
+	 */
 	public Instate(String fname, String lname, int credit, int funds)
 	{
 		super(fname, lname, credit);
@@ -18,7 +28,30 @@ public class Instate extends Student
 	 */
 	public int tuitionDue() 
 	{
-		return 0;
+		int payForCredits;
+		int total;
+		Instate ptr = this;
+		if (ptr.credit < PART_FULL_THRESHOLD)
+		{
+			payForCredits = ptr.credit * INSTATE_TUITION_PER_CRED;
+			total = payForCredits + PART_TIME_STUD_FEE;
+			return total;
+		}
+		else
+		{
+			if (ptr.credit >= CREDIT_PAYMENT_MAX)
+			{
+				payForCredits = CREDIT_PAYMENT_MAX * INSTATE_TUITION_PER_CRED;
+				total = (payForCredits + FULL_TIME_STUD_FEE) - ptr.funds;
+				return total;
+			}
+			else
+			{
+				payForCredits = ptr.credit * INSTATE_TUITION_PER_CRED;
+				total = (payForCredits + FULL_TIME_STUD_FEE) - ptr.funds;
+				return total;
+			}
+		}
 	} // tuitionDue()
 	
 	
@@ -41,11 +74,18 @@ public class Instate extends Student
 	 {
 	     Instate one = new Instate("Chris","Zachariah",12,0);
 	     Instate ptr = one;
-	     System.out.println(ptr.toString());
+	     //System.out.println(ptr.toString());
 	     
 	     Student One = new Instate("Chrisz","Z",12,0);
 	     Student two = new Instate("Chrisa","Z",12,0);
 			
-	     System.out.println(One.compareTo(two));
+	     //System.out.println(One.compareTo(two));
+	     
+	     Instate three = new Instate("Chris","Zachariah",9,0);
+	     System.out.println(three.tuitionDue());
+	     
+	     Student four = new Instate("Chris","Zachariah",14,1000);
+	     System.out.println(four.tuitionDue());
+	     System.out.println(four.toString());
 	 } // main()
 } // Instate

@@ -7,6 +7,12 @@ public abstract class Student implements Comparable
 	private String fname;	// first name of the Student
 	private String lname;	// last name of the Student
 	protected int credit;	// the number of credits that are taken by the Student
+	
+	public final int PART_FULL_THRESHOLD = 12; // < 12 is part-time and >= 12 is full time
+	public final int PART_TIME_STUD_FEE = 846;
+	public final int FULL_TIME_STUD_FEE = 1441;
+	
+	public final int CREDIT_PAYMENT_MAX = 15; // Max amount of credits that the students can pay for
 
 	/**
 	 * This is the parameterized Constructor of the Student class.
@@ -33,7 +39,7 @@ public abstract class Student implements Comparable
 		{
 			return 0;
 		}
-		else if ( ((this.lname.compareTo(ptr.lname)) > 0) || ((this.fname.compareTo(ptr.fname)) > 0) )
+		else if (((this.lname.compareTo(ptr.lname)) > 0) || ((this.fname.compareTo(ptr.fname)) > 0))
 		{
 			return 1;
 		}
@@ -52,10 +58,9 @@ public abstract class Student implements Comparable
 		return "Name: " + this.fname + " " + this.lname + " , Credits: " + this.credit;
 	} // toString()
 
-	//compute the tuition due; concrete implementation is required in the subclasses.
 	/**
 	 * This method will be used to compute the tuition that a specific Student must pay.
-	 * @return the amount of tution that the student must pay
+	 * @return the amount of tuition that the student must pay
 	 */
 	public abstract int tuitionDue();
 } // Student
