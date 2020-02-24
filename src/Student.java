@@ -4,9 +4,9 @@
  */
 public abstract class Student implements Comparable 
 {
-	private String fname;	// first name of the Student
-	private String lname;	// last name of the Student
-	protected int credit;	// the number of credits that are taken by the Student
+	private String fname;
+	private String lname;
+	protected int credit;
 	
 	public final int PART_FULL_THRESHOLD = 12; // < 12 is part-time and >= 12 is full time
 	public final int PART_TIME_STUD_FEE = 846;

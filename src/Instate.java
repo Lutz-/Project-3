@@ -74,12 +74,12 @@ public class Instate extends Student
 	 {
 	     Instate one = new Instate("Chris","Zachariah",12,0);
 	     Instate ptr = one;
-	     //System.out.println(ptr.toString());
+	     System.out.println(ptr.toString());
 	     
 	     Student One = new Instate("Chrisz","Z",12,0);
 	     Student two = new Instate("Chrisa","Z",12,0);
 			
-	     //System.out.println(One.compareTo(two));
+	     System.out.println(One.compareTo(two));
 	     
 	     Instate three = new Instate("Chris","Zachariah",9,0);
 	     System.out.println(three.tuitionDue());
