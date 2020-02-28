@@ -76,8 +76,8 @@ public class Instate extends Student
 	     Instate ptr = one;
 	     System.out.println(ptr.toString());
 	     
-	     Student One = new Instate("Chrisz","Z",12,0);
-	     Student two = new Instate("Chrisa","Z",12,0);
+	     Student One = new Instate("Chrisa","Y",12,0);
+	     Student two = new Instate("Chrisy","Z",12,0);
 			
 	     System.out.println(One.compareTo(two));
 	     

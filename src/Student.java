@@ -35,11 +35,11 @@ public abstract class Student implements Comparable
 	public int compareTo(Object obj) 
 	{
 		Student ptr = (Student) obj;
-		if ((this.lname.equals(ptr.lname)) && (this.fname.equals(ptr.fname)))
+		if ((this.fname.equals(ptr.fname) == true) && (this.lname.equals(ptr.lname) == true))
 		{
 			return 0;
 		}
-		else if (((this.lname.compareTo(ptr.lname)) > 0) || ((this.fname.compareTo(ptr.fname)) > 0))
+		else if (((this.fname.equals(ptr.fname) == false) && ((this.fname.compareTo(ptr.fname)) > 0)) || ((this.lname.equals(ptr.lname) == false) && ((this.lname.compareTo(ptr.lname)) > 0)))
 		{
 			return 1;
 		}
