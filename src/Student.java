@@ -1,12 +1,17 @@
 /**
  * This class is the abstract parent class for the different types of Students.
  * @author Chris Zachariah (cvz2)
+ * @author Anthony Topol (at877)
  */
 public abstract class Student implements Comparable 
 {
 	private String fname;
 	private String lname;
 	protected int credit;
+	
+	public final int EQUAL = 0;
+	public final int LESS = -1;
+	public final int MORE = 1;
 	
 	public final int PART_FULL_THRESHOLD = 12; // < 12 is part-time and >= 12 is full time
 	public final int PART_TIME_STUD_FEE = 846;
@@ -28,24 +33,36 @@ public abstract class Student implements Comparable
 	} // Student()	
 	
 	/**
-	 * This method will compare two Students. Comparisons start with last name and then first name.
+	 * This method will compare two Students. Comparisons start with first name and then last name.
 	 * @param obj is the Student that needs to be compared to the current Student
-	 * @return 0 if the first and last name are the same, 1 if this > obj and -1 if this < obj 
+	 * @return 0 if the first and last name are the same, 1 if this greater than obj and -1 if this less than obj 
 	 */
 	public int compareTo(Object obj) 
 	{
 		Student ptr = (Student) obj;
-		if ((this.fname.equals(ptr.fname) == true) && (this.lname.equals(ptr.lname) == true))
+		if ((this.fname.compareToIgnoreCase(ptr.fname) == 0) && (this.lname.compareToIgnoreCase(ptr.lname) == 0))
 		{
-			return 0;
+			return EQUAL;
 		}
-		else if (((this.fname.equals(ptr.fname) == false) && ((this.fname.compareTo(ptr.fname)) > 0)) || ((this.lname.equals(ptr.lname) == false) && ((this.lname.compareTo(ptr.lname)) > 0)))
+		else if (this.fname.compareToIgnoreCase(ptr.fname) > 0)
 		{
-			return 1;
+			return MORE;
+		}
+		else if ((this.fname.compareToIgnoreCase(ptr.fname) == 0) && (this.lname.compareToIgnoreCase(ptr.lname) > 0))
+		{
+			return MORE;
+		}
+		else if (this.fname.compareToIgnoreCase(ptr.fname) < 0)
+		{
+			return LESS;
+		}
+		else if ((this.fname.compareToIgnoreCase(ptr.fname) == 0) && (this.lname.compareToIgnoreCase(ptr.lname) < 0)) 
+		{
+			return LESS;
 		}
 		else
 		{
-			return -1;
+			return LESS;
 		}
 	} // compareTo()
 	

@@ -1,6 +1,7 @@
 /**
  * This is the In-State Student class that extends Student.
  * @author Chris Zachariah (cvz2)
+ * @author Anthony Topol (at877)
  */
 public class Instate extends Student 
 {
@@ -68,27 +69,30 @@ public class Instate extends Student
 	
 	/**
 	 * This is the test-bed main where the constructor and the methods will be tested.
-	 * @param args 
+	 * @param args is the code
 	 */
 	public static void main(String [] args)
 	 {
-	     Instate one = new Instate("Chris","Zachariah",12,0);
-	     Instate ptr = one;
-	     System.out.println(ptr.toString());
-	     
-	     Student One = new Instate("Chrisa","Y",12,0);
-	     Student two = new Instate("Chrisy","Z",12,0);
-			
-	     System.out.println(One.compareTo(two));
-	     
-	     Instate three = new Instate("Chris","Zachariah",9,0);
-	     System.out.println(three.tuitionDue());
-	     
-	     Student four = new Instate("Chris","Zachariah",14,1000);
-	     System.out.println(four.tuitionDue());
-	     System.out.println(four.toString());
-	     
-	     Instate pete = new Instate("Peter","Paker",12,1000);
-	     System.out.println(pete.toString() + " , Tuition Due: $" + pete.tuitionDue());
+		// test creating an instance of Instate
+		Instate one = new Instate("Chris","Zachariah",12,1000);
+		
+		// test the tuitionDue() method
+		System.out.println(one.tuitionDue());
+		
+		// test compareTo() method
+		Instate two = new Instate("Chris","Zachariah",12,1000);
+		System.out.println(one.compareTo(two));
+		
+		Instate three = new Instate("Alex","Zachariah",12,1000);
+		System.out.println(one.compareTo(three));
+		
+		Instate four = new Instate("Chris","Zechariah",12,1000);
+		System.out.println(one.compareTo(four));
+		
+		// test out the toString() method
+		System.out.println(one.toString());
+		System.out.println(two.toString());
+		System.out.println(three.toString());
+		System.out.println(four.toString());
 	 } // main()
 } // Instate

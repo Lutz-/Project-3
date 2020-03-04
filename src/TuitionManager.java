@@ -1,182 +1,320 @@
 import java.util.Scanner;
 /**
  * This class is called when running the program.
- * The methods are the different commands that can be run to change the set of team members.
- @author Anthony Topol (at877)
+ * The methods are the different commands that can be run to change the list of Students.
+ * @author Chris Zachariah (cvz2)
+ * @author Anthony Topol (at877)
  */
-
-public class TuitionManager {
-    Scanner stdin;
-    StudentList cs213;
-
-    /**
-     * This method will be used to run the main program. The rest of the private methods
-     * are the accepted commands that will be used to manipulate the list of students.
-     */
-    public void run()
-    {
-        System.out.println("New Student List Created. Awaiting Input:");
-        stdin = new Scanner(System.in);
-        cs213 = new StudentList();
-
-        boolean done = false;
-        while (!done)
-        {
-            String command = stdin.next();
-            switch (command.charAt(0))
-            {
-                case 'I': addInstate();
-                    break;
-                case 'O': addOutstate();
-                    break;
-                case 'N': addInternational();
-                    break;
-                case 'R': remove();
-                    break;
-                case 'P': print();
-                    break;
-                case 'Q': print(); done = !done; // terminate the program
-                    break;
-                case 'a': System.out.println("Command '"+ command.charAt(0) +"' is not supported!"); command = stdin.next(); command = stdin.next();
-                    break;
-                case 'r': System.out.println("Command '"+ command.charAt(0) +"' is not supported!"); command = stdin.next(); command = stdin.next();
-                    break;
-                default: System.out.println("Command '"+ command.charAt(0) +"' is not supported!");	//deal with bad command here
-            } // ends the switch statement
-        } // ends the while loop
-        System.out.println("Student Input Complete.");
-        stdin.close();
-    } // run()
-
-    /**
-     * This method will be used to add new in-state students.
-     * The members must not already be on the team and the condition of part-time students not having funding.
-     */
-    private void addInstate()
-    {
-        String fname;
-        fname = stdin.next();
-
-        String lname;
-        lname = stdin.next();
-
-        String creditS;
-        creditS = stdin.next();
-        int credit = Integer.parseInt(creditS);
-
-        String fundingS;
-        fundingS = stdin.next();
-        int funding = Integer.parseInt(fundingS);
-        if(funding > 0 && credit < 12) { //Credit load deemed part time is under 12 credits
-            System.out.println("Instate Part-Time Students are ineligible for funding. Invalid input, please correct and reinput");
-            return;
-        }
-
-        Instate newStudent = new Instate(fname,lname,credit,funding);
-        cs213.add(newStudent);
-
-    } // addInstate()
-
-    /**
-     * This method will be used to add new out-of-state students.
-     * The members must not already be on the team.
-     */
-    private void addOutstate()
-    {
-        String fname;
-        fname = stdin.next();
-
-        String lname;
-        lname = stdin.next();
-
-        String creditS;
-        creditS = stdin.next();
-        int credit = Integer.parseInt(creditS);
-
-        String tristateS;
-        tristateS = stdin.next();
-
-        boolean tristate;
-        System.out.println(tristateS);
-        if(tristateS.equals("T")) {
-            tristate = true;
-            Outstate newStudent = new Outstate(fname, lname, credit, tristate);
-            cs213.add(newStudent);
-            return;
-        }
-        if(tristateS.equals("F")) {
-            tristate = false;
-            Outstate newStudent = new Outstate(fname, lname, credit, tristate);
-            cs213.add(newStudent);
-            return;
-        }
-
-        System.out.println("Invalid command input. For Tristate status T = true, F = false. Please reinput and try again.");
-
-    } //addOutstate()
-
-    /**
-     * This method will be used to add new international students.
-     * The student must not already be on the team and the condition of exchange students having more than 9 credits must be met.
-     */
-    private void addInternational()
-    {
-        String fname;
-        fname = stdin.next();
-
-        String lname;
-        lname = stdin.next();
-
-        String creditS;
-        creditS = stdin.next();
-        int credit = Integer.parseInt(creditS);
-
-        String exchangeS;
-        exchangeS = stdin.next();
-        if(exchangeS.equals("T"))
-            exchangeS = "true";
-        else if(exchangeS.equals("F"))
-            exchangeS = "false";
-        else{
-            System.out.println("Invalid input for exchange status please correct and reinput. T = true, F = false");
-            return;
-        }
-        boolean exchange = Boolean.parseBoolean(exchangeS);
-
-        if(exchange && credit<9) { //9 is the credit amount that exchange students must meet
-            System.out.println("International Exchange Students must enroll at least 9 credit hours. Invalid input please correct and reinput.");
-            return;
-        }
-
-        International newStudent = new International(fname,lname,credit,exchange);
-        cs213.add(newStudent);
-    } //addInternational()
-
-    /**
-     * This method will be used to remove students from the list.
-     * The student must be in the team to be removed.
-     */
-    private void remove()
-    {
-        String fname;
-        fname = stdin.next();
-
-        String lname;
-        lname = stdin.next();
-
-        for(int i=0; i<cs213.numStudents; i++){
-            Student current = cs213.list[i];
-            if(current.compareTo(new Instate(fname, lname,0,0)) ==0 )
-                cs213.remove(current);
-        }
-
-    } // remove()
-
-    /**
-     * This method will print the current members in the team.
-     */
-    private void print()
-    {
-        cs213.print();
-    } // print()
-}
+public class TuitionManager 
+{
+	Scanner stdin;
+	StudentList cs213;
+	
+	public final int CRED_MIN_IN_OUT = 0;
+	public final int CRED_MIN_INTERN = 9;
+	public final int FUND_MIN = 0;
+	
+	public final char TRUE = 'T';
+	public final char FALSE = 'F';
+	
+	/**
+	 * This method will be used to run the main program. The rest of the
+	 * private methods are accepted commands that will be used to 
+	 * manipulate the list of Students.
+	 */
+	public void run() 
+	{
+		System.out.println("Program started.");
+		stdin = new Scanner(System.in);
+		cs213 = new StudentList();
+		
+		boolean done = false;
+		while (!done)
+		{
+			String command = stdin.next();
+			switch (command.charAt(0))
+			{
+			case 'i':
+				System.out.println("Command '"+ command.charAt(0) +"' is not supported!");
+				command = stdin.next();
+				command = stdin.next();
+				command = stdin.next();
+				command = stdin.next();
+				break;
+			case 'o':
+				System.out.println("Command '"+ command.charAt(0) +"' is not supported!");
+				command = stdin.next();
+				command = stdin.next();
+				command = stdin.next();
+				command = stdin.next();
+				break;
+			case 'n':
+				System.out.println("Command '"+ command.charAt(0) +"' is not supported!");
+				command = stdin.next();
+				command = stdin.next();
+				command = stdin.next();
+				command = stdin.next();
+				break;
+			case 'r':
+				System.out.println("Command '"+ command.charAt(0) +"' is not supported!");
+				command = stdin.next();
+				command = stdin.next();
+				break;
+			case 'I':
+				addInState();
+				break;
+			case 'O':
+				addOutState();
+				break;
+			case 'N':
+				addIntern();
+				break;
+			case 'R': 
+				remove();
+        		break;
+			case 'P': 
+				print();
+        		break;
+			case 'Q': 
+				print();
+				done = !done; // terminate the program
+				break;
+			default:
+				System.out.println("Command '"+ command.charAt(0) +"' is not supported!");
+			} // ends the switch-statement
+		} // ends the while loop
+		System.out.println("Program terminated.");
+		stdin.close();
+	} // run()
+	
+	/**
+	 * This private method will make an instance of an In-State Student and
+	 * add him/her to the list. 
+	 */
+	private void addInState()
+	{
+		String firstName;
+		firstName = stdin.next();
+		
+		String lastName;
+		lastName = stdin.next();
+		
+		String creditString;
+		creditString = stdin.next();
+		
+		String fundingString;
+		fundingString = stdin.next();
+		
+		try
+		{
+			int creds = Integer.parseInt(creditString);
+			int funds = Integer.parseInt(fundingString);
+			
+			if (creds > CRED_MIN_IN_OUT)
+			{
+				if (funds >= FUND_MIN)
+				{
+					Instate newStudent = new Instate(firstName, lastName, creds, funds);
+					if ((cs213.isEmpty() == false) && (cs213.contains(newStudent) == true))
+					{
+						System.out.println(newStudent.toString() + " is already on the list.");
+					}
+					else
+					{
+						cs213.add(newStudent);
+						System.out.println(newStudent.toString() + " has been added to the list.");
+					}
+				}
+				else
+				{
+					System.out.println("Invalid entry: Amount of funding entered must be 0 or greater.");
+				}
+			}
+			else
+			{
+				System.out.println("Invalid entry: Number of credits entered must be greater than 0.");
+			}
+		}
+		catch (Exception e)
+		{
+			System.out.println("Invalid entry: Please make sure that number of credits and amount of "
+					+ "funding are integer numbers.");
+		}
+	} // addInstate()
+	
+	/**
+	 * This private method will make an instance of an Out-State Student and
+	 * add him/her to the list.
+	 */
+	private void addOutState()
+	{
+		String firstName;
+		firstName = stdin.next();
+		
+		String lastName;
+		lastName = stdin.next();
+		
+		String creditString;
+		creditString = stdin.next();
+		
+		String tristateString;
+		tristateString = stdin.next();
+		
+		try
+		{
+			int creds = Integer.parseInt(creditString);
+			boolean isInTristate;
+			
+			if (creds > CRED_MIN_IN_OUT)
+			{
+				if (tristateString.charAt(0) == TRUE)
+				{
+					isInTristate = true;
+					Outstate newStudent = new Outstate(firstName, lastName, creds, isInTristate);
+					if ((cs213.isEmpty() == false) && (cs213.contains(newStudent) == true))
+					{
+						System.out.println(newStudent.toString() + " is already on the list.");
+					}
+					else
+					{
+						cs213.add(newStudent);
+						System.out.println(newStudent.toString() + " has been added to the list.");
+					}
+				}
+				else if (tristateString.charAt(0) == FALSE)
+				{
+					isInTristate = false;
+					Outstate newStudent = new Outstate(firstName, lastName, creds, isInTristate);
+					if ((cs213.isEmpty() == false) && (cs213.contains(newStudent) == true))
+					{
+						System.out.println(newStudent.toString() + " is already on the list.");
+					}
+					else
+					{
+						cs213.add(newStudent);
+						System.out.println(newStudent.toString() + " has been added to the list.");
+					}
+				}
+				else 
+				{
+					System.out.println("Invalid entry: Please use T or F for declaring whether the Student"
+							+ "is in the tri-state or not.");
+				}
+			}
+			else
+			{
+				System.out.println("Invalid entry: Number of credits entered must be greater than 0.");
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println("Invalid entry: Please make sure that number of credits "
+					+ "is an integer number.");
+		}
+	} // addOutState()
+	
+	/**
+	 * This private method will make an instance of an International Student and 
+	 * add him/her to the list.
+	 */
+	private void addIntern()
+	{
+		String firstName;
+		firstName = stdin.next();
+		
+		String lastName;
+		lastName = stdin.next();
+		
+		String creditString;
+		creditString = stdin.next();
+		
+		String exchangeString;
+		exchangeString = stdin.next();
+		
+		try
+		{
+			int creds = Integer.parseInt(creditString);
+			boolean isExchange;
+			
+			if (creds >= CRED_MIN_INTERN)
+			{
+				if (exchangeString.charAt(0) == TRUE)
+				{
+					isExchange = true;
+					International newStudent = new International(firstName, lastName, creds, isExchange);
+					if ((cs213.isEmpty() == false) && (cs213.contains(newStudent) == true))
+					{
+						System.out.println(newStudent.toString() + " is already on the list.");
+					}
+					else
+					{
+						cs213.add(newStudent);
+						System.out.println(newStudent.toString() + " has been added to the list.");
+					}
+				}
+				else if (exchangeString.charAt(0) == FALSE)
+				{
+					isExchange = false;
+					International newStudent = new International(firstName, lastName, creds, isExchange);
+					if ((cs213.isEmpty() == false) && (cs213.contains(newStudent) == true))
+					{
+						System.out.println(newStudent.toString() + " is already on the list.");
+					}
+					else
+					{
+						cs213.add(newStudent);
+						System.out.println(newStudent.toString() + " has been added to the list.");
+					}
+				}
+				else 
+				{
+					System.out.println("Invalid entry: Please use T or F for declaring whether the Student"
+							+ " has exchange status or not.");
+				}
+			}
+			else
+			{
+				System.out.println("Invalid entry: Number of credits entered must be greater than or equal to 9.");
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println("Invalid entry: Please make sure that number of credits "
+					+ "is an integer number.");
+		}
+	} // addIntern()
+	
+	/**
+	 * This private method will be used to remove a specific Student from the list.
+	 * The Student must be present within the list.
+	 */
+	private void remove()
+	{
+		String firstName;
+		firstName = stdin.next();
+		
+		String lastName;
+		lastName = stdin.next();
+		
+		int cred = CRED_MIN_INTERN; // need a positive integer to hold place for credits
+		boolean placeHolder = true; // need a place holder for the T/F value
+		
+		Outstate newStudent = new Outstate(firstName, lastName, cred, placeHolder);
+		if (cs213.remove(newStudent))
+		{
+			System.out.println(firstName + " "+ lastName + " has been removed from the list.");
+		}
+		else
+		{
+			System.out.println(firstName + " "+ lastName + " is not on the list.");
+		}	
+	} // remove()
+	
+	/**
+	 * This private method will print the Students currently on the list.
+	 */
+	private void print()
+	{
+		cs213.print();
+	} // print()
+} // TuitionManager

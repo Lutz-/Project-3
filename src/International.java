@@ -1,6 +1,7 @@
 /**
  * This is the International Student class that extends Student.
  * @author Chris Zachariah (cvz2)
+ * @author Anthony Topol (at877)
  */
 public class International extends Student {
 	private boolean exchange;
@@ -100,12 +101,31 @@ public class International extends Student {
 	
 	/**
 	 * This is the test-bed main where the constructor and the methods will be tested.
-	 * @param args 
+	 * @param args is the code
 	 */
 	public static void main(String [] args)
 	 {
-		International one = new International("Chris","Zachariah",17,false);
-		System.out.println(one.toString() + " , Tuition Due: $" + one.tuitionDue());
+		// test creating an instance of International
+		International one = new International("Chris","Zachariah",17,true);
+				
+		// test the tuitionDue() method
+		System.out.println(one.tuitionDue());
+				
+		// test compareTo() method
+		International two = new International("Chris","Zachariah",17,false);
+		System.out.println(one.compareTo(two));
+				
+		International three = new International("Alex","Zachariah",17,true);
+		System.out.println(one.compareTo(three));
+				
+		International four = new International("Chris","Zechariah",17,false);
+		System.out.println(one.compareTo(four));
+				
+		// test out the toString() method
+		System.out.println(one.toString());
+		System.out.println(two.toString());
+		System.out.println(three.toString());
+		System.out.println(four.toString());
 	 } // main()
 
 } // International

@@ -1,6 +1,7 @@
 /**
  * This is the Out-Of-State Student class that extends Student.
  * @author Chris Zachariah (cvz2)
+ * @author Anthony Topol (at877)
  */
 public class Outstate extends Student 
 {
@@ -34,18 +35,9 @@ public class Outstate extends Student
 		Outstate ptr = this;
 		if (ptr.credit < PART_FULL_THRESHOLD)
 		{
-			if (ptr.tristate)
-			{
-				payForCredits = ptr.credit * (OUTSTATE_TUITION_PER_CRED - OUTSTATE_DISCOUNT);
-				total = payForCredits + PART_TIME_STUD_FEE;
-				return total;
-			}
-			else
-			{
-				payForCredits = ptr.credit * OUTSTATE_TUITION_PER_CRED;
-				total = payForCredits + PART_TIME_STUD_FEE;
-				return total;
-			}
+			payForCredits = ptr.credit * OUTSTATE_TUITION_PER_CRED;
+			total = payForCredits + PART_TIME_STUD_FEE;
+			return total;
 		}
 		else
 		{
@@ -104,15 +96,30 @@ public class Outstate extends Student
 	
 	/**
 	 * This is the test-bed main where the constructor and the methods will be tested.
-	 * @param args 
+	 * @param args is the code
 	 */
 	public static void main(String [] args)
 	 {
+		// test creating an instance of Outstate
 		Outstate one = new Outstate("Chris","Zachariah",17,true);
-		System.out.println(one.toString());
+				
+		// test the tuitionDue() method
 		System.out.println(one.tuitionDue());
-		
-		Outstate two = new Outstate("Chris","Zachariah",9,true);
-		System.out.println(two.compareTo(one));
+				
+		// test compareTo() method
+		Outstate two = new Outstate("Chris","Zachariah",17,false);
+		System.out.println(one.compareTo(two));
+				
+		Outstate three = new Outstate("Alex","Zachariah",17,true);
+		System.out.println(one.compareTo(three));
+				
+		Outstate four = new Outstate("Chris","Zechariah",17,false);
+		System.out.println(one.compareTo(four));
+				
+		// test out the toString() method
+		System.out.println(one.toString());
+		System.out.println(two.toString());
+		System.out.println(three.toString());
+		System.out.println(four.toString());
 	 } // main()
 } // Outstate
